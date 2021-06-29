@@ -127,8 +127,12 @@ class Scanner:
         options.add_argument('--headless')
         self.driver = webdriver.Chrome(chrome_options=options)
         query_window, html_window = self.setup_windows()
+        webelement_list = []
         if self.html_scan:
-            webelement_list = WebDriverWait(self.driver, 10).until(expected_conditions.presence_of_all_elements_located((By.XPATH, "//input | //textarea | //button")))
+            try:
+                webelement_list = WebDriverWait(self.driver, 10).until(expected_conditions.presence_of_all_elements_located((By.XPATH, "//input | //textarea | //button")))
+            except:
+                pass
         for payload in self.payloads:
             self.driver.switch_to.window(query_window)
             self.query_scanner(payload)
