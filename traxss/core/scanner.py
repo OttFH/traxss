@@ -59,7 +59,7 @@ class Scanner:
             'path': cookies[2]
         }
         return cookies_obj
-    
+
     def get_params(self):
         pure_url = urllib.parse.urlparse(self.url)
         query_string = pure_url.query
@@ -72,7 +72,7 @@ class Scanner:
             self.params[param] = payload
             target_url = encode_url(self.base_url, self.params)
             self.raw_params = urllib.parse.urlencode(self.params)
-            if self.cookies: 
+            if self.cookies:
                 self.driver.get(self.url)
                 self.driver.add_cookie(self.cookies)
             self.driver.get(target_url)
@@ -127,7 +127,8 @@ class Scanner:
         options.add_argument('--headless')
         self.driver = webdriver.Chrome(chrome_options=options)
         query_window, html_window = self.setup_windows()
-        webelement_list = WebDriverWait(self.driver, 10).until(expected_conditions.presence_of_all_elements_located((By.XPATH, "//input | //textarea | //button")))
+        if self.html_scan:
+            webelement_list = WebDriverWait(self.driver, 10).until(expected_conditions.presence_of_all_elements_located((By.XPATH, "//input | //textarea | //button")))
         for payload in self.payloads:
             self.driver.switch_to.window(query_window)
             self.query_scanner(payload)
@@ -135,7 +136,7 @@ class Scanner:
                 self.driver.switch_to.window(html_window)
                 self.html_scanner(payload, webelement_list, self.base_url)
         self.final_report()
-        
+
     def count_results(self, raw_params, target_url, scan_type):
         self.result_count += 1
         print(green('RESULTS: {}'.format(self.result_count).center(50, '='), bold=True))
@@ -171,12 +172,12 @@ class Scanner:
                 json_file.seek(0)
                 json.dump(obj, json_file, indent=4)
             print(blue('[*] Stored Results To {}'.format(real_path)))
-            
+
     def final_report(self):
         print(blue('[*] Completed Scan on URL'))
         if self.result_count == 0:
             print(red('[!] No Results Found. Warning This Does NOT Mean You Are Not Still Vulnerable [!]'))
-        else: 
+        else:
             self.store_results()
         input("Press any key to exit.....")
         os._exit(0)

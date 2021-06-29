@@ -26,7 +26,7 @@ class Menu:
     [4] Scan URL (Fast w/o HTML Scan)
     
     [5] Exit Program\n"""
-    
+
     def start(self):
         stop_on_first = False
         store_output = False
@@ -40,7 +40,7 @@ class Menu:
             ps1 = str('traxss> ')
         else:
             ps1 = str(blue('[') + white('traxss') + blue(']') + '> ')
-        
+
         while True:
             option = input(ps1)
             if option == '1':
@@ -205,7 +205,7 @@ class Menu:
                 print(red('[*] This may take a while. Press ENTER to continue or Ctrl-C to quit. [*]'))
                 input()
                 print()
-                scanner = Scanner(url, cookies, stop_on_first, store_output, report_out, html_scan=True)
+                scanner = Scanner(url, cookies, stop_on_first, store_output, report_out, html_scan=False)
                 scanner.run_on_url()
                 scanner.store_results()
             elif option == '4':
