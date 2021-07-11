@@ -14,11 +14,13 @@ def get_payloads_from_vectors(fast=False):
     if not fast:
         with open('traxss/core/constants/vectors.txt', 'r', encoding = "utf-8") as vector_file:
             for vector in vector_file.readlines():
-                payloads.append(vector)
+                if len(vector) > 0:
+                    payloads.append(vector)
     else:
         with open('traxss/core/constants/vectors.txt', 'r', encoding = "utf-8") as vector_file:
             for vector in vector_file.readlines():
-                payloads.append(vector)
+                if len(vector) > 0:
+                    payloads.append(vector)
     return payloads
 
 def get_base_url(url):
