@@ -52,11 +52,11 @@ class Scanner:
                 raise Exception('Missing Report Output')
 
     def get_cookies(self):
-        cookies_list = cookies.split(':')
+        cookies_list = self.cookies.split(':')
         cookies_obj = {
-            'name': cookies[0],
-            'values': cookies[1],
-            'path': cookies[2]
+            'name': cookies_list[0],
+            'values': cookies_list[1],
+            'path': cookies_list[2]
         }
         return cookies_obj
 
